@@ -25,6 +25,8 @@ def input_pdf_text(uploaded_file):
 
 #Prompt Template
 
+
+
 input_prompt="""
 Hey Act Like a skilled or very experience ATS(Application Tracking System)
 with a deep understanding of tech field,software engineering,data science ,data analyst
@@ -40,6 +42,12 @@ I want the response in one single string having the structure
 {{"JD Match":"%","MissingKeywords:[]","Profile Summary":""}}
 """
 
+input_prompt1 = """
+You are an skilled ATS (Applicant Tracking System) scanner with a deep understanding of data science and ATS functionality, 
+your task is to evaluate the resume against the provided job description. give me the percentage of match if the resume matches
+the job description. First the output should come as percentage and then keywords missing and last final thoughts.
+"""
+
 ##Streamlit app
 st.title("Gemini Recruit")
 st.text("Improve your chances")
@@ -47,10 +55,22 @@ jd = st.text_area("Paste the Job Description")
 uploaded_file=st.file_uploader("Upload your Resume", type="pdf",help ="Please uplaod the pdf")
 
 submit = st.button("Submit")
+submit1 = st.button("Tell me about the Resume!!")
 
 if submit:
     if uploaded_file is not None:
         text=input_pdf_text(uploaded_file)
         response = get_gemini_response(input_prompt)
         st.subheader(response)
+
+if submit1:
+    if uploaded_file is not None:
+        pdf_content=input_pdf_text(uploaded_file)
+        response=get_gemini_response(input_prompt1)
+        st.subheader("The Repsonse is")
+        st.write(response)
+
+
+
+
 
